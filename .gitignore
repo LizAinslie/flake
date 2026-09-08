@@ -1,0 +1,13 @@
+# Ignore Nix build result symlinks
+result
+result-*
+
+# Ignore secrets/keys if you store them separately
+*.key
+*.pem
+secrets/
+
+# Ignore temporary swap files from editors
+*.swp
+*~
+.DS_Store
