@@ -3,9 +3,11 @@
 {
   imports = [
     ../../shared/core.nix
-    ../../shared/apps.nix
     ../../shared/users.nix
     ../../shared/themes.nix
+
+    ../../shared/apps/core.nix
+    ../../shared/apps/dev.nix
 
     ../../shared/graphics/nvidia.nix
 
@@ -32,8 +34,6 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    jetbrains.idea
-    gradle
   ];
 
   programs.nix-ld = {

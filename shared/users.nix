@@ -4,7 +4,7 @@
   users.users."mey" = {
     isNormalUser = true;
     description = "Elizabeth Hazel Ainslie";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "kvm" ];
     packages = with pkgs; [
     ];
     shell = pkgs.fish;
