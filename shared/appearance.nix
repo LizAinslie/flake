@@ -17,4 +17,8 @@
       winDecStyles = [ "modern" ]; # "classic" or "modern"
     })
   ];
+
+  fonts.packages = with pkgs; [
+    maple-mono.variable
+  ];
 }

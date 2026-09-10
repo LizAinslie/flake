@@ -4,7 +4,7 @@
   imports = [
     ../../shared/core.nix
     ../../shared/users.nix
-    ../../shared/themes.nix
+    ../../shared/appearance.nix
 
     ../../shared/apps/core.nix
     ../../shared/apps/dev.nix

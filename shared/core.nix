@@ -102,13 +102,18 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  services.usbmuxd = {
+    enable = true;
+    package = pkgs.usbmuxd2;
+  };
+
   # packages
   environment.systemPackages = with pkgs; [
     fastfetch
     wget
     git
     fish
-    zed-editor
-    kdePackages.filelight
+    libimobiledevice
+    ifuse
   ];
 }
