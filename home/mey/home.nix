@@ -3,7 +3,7 @@
 {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
-    ../shared/storage.nix
+    ../../shared/storage.nix
   ];
 
   catppuccin = {
@@ -13,13 +13,26 @@
     accent = "mauve";
   };
 
+  programs.kitty = {
+    enable = true;
+  };
+
   # ssh
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
 
-    settings."*" = {
-      AddKeysToAgent = "yes";
+    settings = {
+      "*" = {
+        AddKeysToAgent = "yes";
+      };
+
+      "ryuma" = {
+        AddKeysToAgent = "yes";
+        Port = 2222;
+        HostName = "192.168.68.56";
+        IdentityFile = "~/.ssh/id_ed25519";
+      };
     };
   };
 
@@ -49,6 +62,8 @@
         name = "Elizabeth Hazel Ainslie";
         email = "mey@lizainslie.dev";
       };
+
+      init.defaultBranch = "main";
     };
 
     signing = {
@@ -125,6 +140,8 @@
     [ForegroundIntense]
     Color=205,214,244
   '';
+
+  wayland.windowManager.hyprland.enable = true;
 
   home.username = "mey";
   home.homeDirectory = "/home/mey";

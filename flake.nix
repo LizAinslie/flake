@@ -29,6 +29,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    grok-bot = {
+      url = "github:jordangarrison/grok-bot-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # aethermesh = {
+    #   url = "git+ssh://github.com/PaulWilkerson/AetherMesh.git";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = { self, nixpkgs, catppuccin, home-manager, sops-nix, vicinae, ... }@inputs: {
@@ -55,7 +64,7 @@
 
             home-manager.extraSpecialArgs = { inherit inputs; };
 
-            home-manager.users.mey = import ./home/mey.nix;
+            home-manager.users.mey = import ./home/mey/home.nix;
           }
         ];
       };

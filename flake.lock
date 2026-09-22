@@ -20,6 +20,26 @@
         "type": "github"
       }
     },
+    "grok-bot": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1789028073,
+        "narHash": "sha256-E1Vi4lDlb2W28KnPPxOzR1HKdUtBrplUNUNxEkUbZz8=",
+        "owner": "jordangarrison",
+        "repo": "grok-bot-flake",
+        "rev": "86fd509114ad500bc43f2f8f1efe1e5aa1e85d76",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jordangarrison",
+        "repo": "grok-bot-flake",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -97,6 +117,7 @@
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
+        "grok-bot": "grok-bot",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",
         "sops-nix": "sops-nix",

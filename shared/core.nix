@@ -86,6 +86,12 @@
     wireplumber.enable = true;
   };
 
+  # libGL/libEGL for Nix-patched runtimes (JetBrains JBR, Android Studio) and
+  # for unpatched JVMs run through nix-ld (Compose/Skiko dlopens libGL.so.1).
+  # List definitions of sessionVariables are concatenated with ":", so the
+  # pipewire-jack entry above is preserved.
+  environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.libglvnd}/lib" ];
+
   # gpg
   programs.gnupg.agent = {
     enable = true;
@@ -115,5 +121,6 @@
     fish
     libimobiledevice
     ifuse
+    kitty
   ];
 }

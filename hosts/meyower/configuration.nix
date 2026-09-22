@@ -8,10 +8,12 @@
 
     ../../shared/apps/core.nix
     ../../shared/apps/dev.nix
+    ../../shared/apps/games.nix
 
     ../../shared/graphics/nvidia.nix
 
     ../../shared/desktops/kde.nix
+    ../../shared/desktops/hypr.nix
 
     ./hardware.nix
   ];
@@ -48,6 +50,7 @@
       alsa-lib
       freetype
       fontconfig
+      libglvnd
     ];
   };
 

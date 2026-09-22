@@ -10,6 +10,11 @@
     kdePackages.filelight
     vlc
     spotify
+    obsidian
+    openssl
+    tailscale
+    nmap
+    google-chrome
 
     (pkgs.wrapFirefox
       inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped

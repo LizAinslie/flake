@@ -41,6 +41,7 @@
     gradle
     android-studio-full
     android-tools
+    scrcpy
     bun
     httpie-desktop
     yaak
@@ -48,5 +49,10 @@
     pnpm
     nodejs
     litellm
+    gh
+    docker
+    figma-linux
+
+    inputs.grok-bot.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
