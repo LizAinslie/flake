@@ -25,7 +25,6 @@ in
 
   programs.eww = lib.mkIf wantI3Eww {
     enable = true;
-    enableBashIntegration = false;
   };
 
   programs.ssh = {
