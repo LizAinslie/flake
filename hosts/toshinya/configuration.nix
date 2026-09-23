@@ -10,13 +10,13 @@
     ../../shared/desktops/i3.nix
     ../../shared/desktops/greetd.nix
     ./hardware.nix
+    ./disks.nix
   ];
 
   networking.hostName = "toshinya";
 
   mey.profile = {
     firmware = "bios";
-    # Replace with /dev/disk/by-id/ata-… after generate-config if you want.
     grubDevice = "/dev/sda";
     kernel = "lts";
     desktop = "none";
@@ -35,6 +35,11 @@
   };
 
   services.openssh.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    cryptsetup
+    btrfs-progs
+  ];
 
   system.stateVersion = "26.05";
 }
