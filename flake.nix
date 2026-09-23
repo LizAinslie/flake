@@ -14,6 +14,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,7 +41,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, catppuccin, home-manager, sops-nix, vicinae, ... }@inputs:
+  outputs = { self, nixpkgs, catppuccin, home-manager, plasma-manager, sops-nix, vicinae, ... }@inputs:
     let
       mkHost = { hostPath, extraModules ? [ ] }:
         nixpkgs.lib.nixosSystem {
@@ -50,7 +56,10 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.sharedModules = [ vicinae.homeManagerModules.default ];
+              home-manager.sharedModules = [
+                vicinae.homeManagerModules.default
+                plasma-manager.homeManagerModules.plasma-manager
+              ];
               home-manager.users.mey = import ./home/mey/home.nix;
             }
           ] ++ extraModules;
