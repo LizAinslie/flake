@@ -35,11 +35,9 @@ in
 
   programs.vicinae = lib.mkIf wantVicinae {
     enable = true;
-    # Layer shell is Wayland-only (Plasma/Hypr). i3 on X11 stays off.
     useLayerShell = wantHypr || wantPlasma;
   };
 
-  # KDE: Meta+Space → vicinae (steals Application Launcher / KRunner if they used Meta+Space).
   programs.plasma = lib.mkIf wantPlasma {
     enable = true;
     hotkeys.commands."vicinae" = {
@@ -50,17 +48,19 @@ in
     shortcuts."services/plasma-manager-commands.desktop".vicinae = "Meta+Space";
   };
 
-  # Hyprland: same chord. Hyprlang in settings.bind, not hyprlua.
+  # Hyprland 0.55+ : hyprland.lua. Package comes from the NixOS module (Hyprland flake).
   wayland.windowManager.hyprland = {
     enable = wantHypr;
-    settings = lib.mkIf wantHypr {
-      bind = [
-        "SUPER, SPACE, exec, vicinae toggle"
-      ];
-    };
+    package = null;
+    portalPackage = null;
+    configType = "lua";
+    extraConfig = lib.mkIf wantHypr ''
+      hl.bind("SUPER + SPACE", function()
+        hl.exec_cmd("vicinae toggle")
+      end)
+    '';
   };
 
-  # Stock i3 v4 layout, nix-managed. $mod = Super.
   xsession.windowManager.i3 = lib.mkIf wantI3Eww {
     enable = true;
     config = {
