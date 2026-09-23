@@ -16,6 +16,7 @@ in
         i3status
         i3lock
         dmenu
+        feh
       ] ++ lib.optional wantedEww eww;
     };
 
