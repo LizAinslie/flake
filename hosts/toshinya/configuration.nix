@@ -32,6 +32,7 @@
       spotify = false;
       zed = true;
       tor = true;
+      obsidian = true;
       extras = false;
     };
   };

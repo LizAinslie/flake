@@ -48,7 +48,8 @@ with lib;
       spotify = mkEnableOption "spotify" // { default = true; };
       zed = mkEnableOption "Zed editor" // { default = true; };
       tor = mkEnableOption "Tor Browser" // { default = true; };
-      extras = mkEnableOption "obsidian/filelight" // { default = true; };
+      obsidian = mkEnableOption "Obsidian" // { default = true; };
+      extras = mkEnableOption "filelight and other extras" // { default = true; };
     };
   };
 }

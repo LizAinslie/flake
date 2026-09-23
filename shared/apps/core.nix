@@ -17,8 +17,8 @@ in
     nmap
   ] ++ lib.optional a.zed zed-editor
     ++ lib.optional a.tor tor-browser
+    ++ lib.optional a.obsidian obsidian
     ++ lib.optionals a.extras [
       kdePackages.filelight
-      obsidian
     ];
 }
