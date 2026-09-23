@@ -6,7 +6,12 @@ let
     profile.desktop == "hypr"
     || profile.desktop == "plasma+hypr"
     || builtins.elem "hypr" profile.sessions;
+  wantPlasma =
+    profile.desktop == "plasma"
+    || profile.desktop == "plasma+hypr"
+    || builtins.elem "plasma" profile.sessions;
   wantI3Eww = builtins.elem "i3-eww" profile.sessions;
+  wantVicinae = wantI3Eww || wantHypr || wantPlasma;
   mod = "Mod4";
 in
 {
@@ -28,13 +33,34 @@ in
     enable = true;
   };
 
-  programs.vicinae = lib.mkIf wantI3Eww {
+  programs.vicinae = lib.mkIf wantVicinae {
     enable = true;
-    useLayerShell = false;
+    # Layer shell is Wayland-only (Plasma/Hypr). i3 on X11 stays off.
+    useLayerShell = wantHypr || wantPlasma;
+  };
+
+  # KDE: Meta+Space → vicinae (steals Application Launcher / KRunner if they used Meta+Space).
+  programs.plasma = lib.mkIf wantPlasma {
+    enable = true;
+    hotkeys.commands."vicinae" = {
+      name = "Vicinae";
+      key = "Meta+Space";
+      command = "vicinae toggle";
+    };
+    shortcuts."services/plasma-manager-commands.desktop".vicinae = "Meta+Space";
+  };
+
+  # Hyprland: same chord. Hyprlang in settings.bind, not hyprlua.
+  wayland.windowManager.hyprland = {
+    enable = wantHypr;
+    settings = lib.mkIf wantHypr {
+      bind = [
+        "SUPER, SPACE, exec, vicinae toggle"
+      ];
+    };
   };
 
   # Stock i3 v4 layout, nix-managed. $mod = Super.
-  # Replaces ~/.config/i3/config on switch.
   xsession.windowManager.i3 = lib.mkIf wantI3Eww {
     enable = true;
     config = {
@@ -50,7 +76,7 @@ in
 
       keybindings = lib.mkOptionDefault {
         "${mod}+Return" = "exec kitty";
-        "${mod}+space" = "exec --no-startup-id vicinae";
+        "${mod}+space" = "exec --no-startup-id vicinae toggle";
         "${mod}+d" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run";
         "${mod}+Shift+q" = "kill";
         "${mod}+Shift+c" = "reload";
@@ -248,8 +274,6 @@ in
     [ForegroundIntense]
     Color=205,214,244
   '';
-
-  wayland.windowManager.hyprland.enable = wantHypr;
 
   home.username = "mey";
   home.homeDirectory = "/home/mey";
