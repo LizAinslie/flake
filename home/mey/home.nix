@@ -39,7 +39,13 @@ in
 
   programs.vicinae = lib.mkIf wantVicinae {
     enable = true;
-    settings.launcher_window.layer_shell.enabled = wantHypr || wantPlasma;
+    systemd.enable = true;
+    # greetd+i3 never reaches graphical-session.target
+    systemd.target = if wantI3Eww then "default.target" else "graphical-session.target";
+    settings = {
+      launcher_window.layer_shell.enabled = wantHypr || wantPlasma;
+      global_shortcuts.toggle = "super+space";
+    };
   };
 
   programs.plasma = lib.mkIf wantPlasma {
@@ -73,13 +79,21 @@ in
         size = 8.0;
       };
       terminal = "kitty";
-      menu = "vicinae";
+      menu = "vicinae toggle";
       window.titlebar = true;
       floating.titlebar = true;
 
+      startup = [
+        {
+          command = "systemctl --user start vicinae.service";
+          notification = false;
+        }
+      ];
+
       keybindings = lib.mkOptionDefault {
         "${mod}+Return" = "exec kitty";
-        "${mod}+space" = "exec --no-startup-id vicinae toggle";
+        "${mod}+space" =
+          "exec --no-startup-id systemctl --user start vicinae.service; exec --no-startup-id vicinae toggle";
         "${mod}+d" = "exec --no-startup-id ${pkgs.dmenu}/bin/dmenu_run";
         "${mod}+Shift+q" = "kill";
         "${mod}+Shift+c" = "reload";
