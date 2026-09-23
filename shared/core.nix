@@ -86,8 +86,6 @@ in
     wayland.enable = p.displayManager == "sddm";
   };
 
-  services.displayManager.lightdm.enable = p.displayManager == "lightdm";
-
   nixpkgs.config.allowUnfree = true;
 
   services.usbmuxd = {
