@@ -58,12 +58,12 @@ let
     # @vicinae.mode silent
     # @vicinae.icon paintbrush
     set -eu
-    cfg="${config.home.homeDirectory}/.config/vicinae/vicinae.json"
+    cfg="${config.home.homeDirectory}/.config/vicinae/settings.json"
     mkdir -p "$(dirname "$cfg")"
     if [ -f "$cfg" ]; then
       ${pkgs.jq}/bin/jq --arg t "${flavor}" '.theme.name = $t' "$cfg" > "$cfg.tmp" && mv "$cfg.tmp" "$cfg"
     else
-      echo "{\"theme\":{\"name\":\"${flavor}\"}}" > "$cfg"
+      printf '%s\n' "{\"theme\":{\"name\":\"${flavor}\"}}" > "$cfg"
     fi
     systemctl --user try-reload-or-restart vicinae.service >/dev/null 2>&1 || true
   '';
@@ -74,13 +74,10 @@ let
     frappe = mkTheme "Catppuccin Frappe" "catppuccin-frappe";
     latte = mkTheme "Catppuccin Latte" "catppuccin-latte";
   };
-
-  ctp = hex: { inherit hex; };
 in
 {
-  home.packages = lib.optionals wantI3Eww [ pkgs.feh pkgs.jq ];
+  home.packages = [ pkgs.jq ] ++ lib.optional wantI3Eww pkgs.feh;
 
-  # Real files: vicinae will not index HM symlinks in scripts/.
   home.activation.vicinaeLookScripts = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     dest="${config.home.homeDirectory}/.local/share/vicinae/scripts"
     $DRY_RUN_CMD mkdir -p "$dest" "${wallDir}" \
@@ -110,12 +107,10 @@ in
         variant = "dark";
         inherits = "vicinae-dark";
       };
-      colors = {
-        core = {
-          background = "#1e1e2e";
-          foreground = "#cdd6f4";
-          accent = "#cba6f7";
-        };
+      colors.core = {
+        background = "#1e1e2e";
+        foreground = "#cdd6f4";
+        accent = "#cba6f7";
       };
     };
     catppuccin-macchiato = {
