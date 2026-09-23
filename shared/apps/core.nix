@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
-  a = config.mey.profile.apps;
+  tools = config.mey.profile.apps.tools;
 in
 {
   imports = [
@@ -9,16 +9,16 @@ in
     ./social.nix
     ./media.nix
     ./zen.nix
+    ./games.nix
   ];
 
   environment.systemPackages = with pkgs; [
     openssl
     tailscale
     nmap
-  ] ++ lib.optional a.zed zed-editor
-    ++ lib.optional a.tor tor-browser
-    ++ lib.optional a.obsidian obsidian
-    ++ lib.optionals a.extras [
-      kdePackages.filelight
-    ];
+  ] ++ lib.optionals tools.enable (
+    lib.optional tools.zed zed-editor
+    ++ lib.optional tools.obsidian obsidian
+    ++ lib.optional tools.filelight kdePackages.filelight
+  );
 }

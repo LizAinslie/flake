@@ -24,16 +24,25 @@
     displayManager = "greetd";
     browser = "librewolf";
     apps = {
-      web = true;
-      zen = false;
-      chrome = false;
-      social = false;
-      media = true;
-      spotify = false;
-      zed = true;
-      tor = true;
-      obsidian = true;
-      extras = false;
+      web = {
+        enable = true;
+        chrome = false;
+        zen = false;
+        tor = true;
+      };
+      social.enable = false;
+      media = {
+        enable = true;
+        vlc = true;
+        spotify = false;
+      };
+      tools = {
+        enable = true;
+        zed = true;
+        obsidian = true;
+        filelight = false;
+      };
+      games.enable = false;
     };
   };
 

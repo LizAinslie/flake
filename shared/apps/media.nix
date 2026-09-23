@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.mey.profile;
+  m = config.mey.profile.apps.media;
 in
 {
-  config = lib.mkIf cfg.apps.media {
+  config = lib.mkIf m.enable {
     environment.systemPackages =
-      [ pkgs.vlc ]
-      ++ lib.optional cfg.apps.spotify pkgs.spotify;
+      lib.optional m.vlc pkgs.vlc
+      ++ lib.optional m.spotify pkgs.spotify;
   };
 }

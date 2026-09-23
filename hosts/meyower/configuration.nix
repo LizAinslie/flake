@@ -8,7 +8,7 @@
 
     ../../shared/apps/core.nix
     ../../shared/apps/dev.nix
-    ../../shared/apps/games.nix
+    # games.nix is pulled in via apps/core.nix and gated on apps.games.enable
 
     ../../shared/graphics/nvidia.nix
 
@@ -29,16 +29,11 @@
     displayManager = "sddm";
     browser = "firefox";
     apps = {
-      web = true;
-      zen = true;
-      chrome = true;
-      social = true;
-      media = true;
-      spotify = true;
-      zed = true;
-      tor = true;
-      obsidian = true;
-      extras = true;
+      web.enable = true;
+      social.enable = true;
+      media.enable = true;
+      tools.enable = true;
+      games.enable = true;
     };
   };
 

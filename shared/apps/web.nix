@@ -1,16 +1,18 @@
 { config, lib, pkgs, ... }:
 
 let
-  cfg = config.mey.profile;
+  p = config.mey.profile;
+  web = p.apps.web;
 in
 {
-  config = lib.mkIf cfg.apps.web {
-    programs.firefox.enable = cfg.browser == "firefox";
+  config = lib.mkIf web.enable {
+    programs.firefox.enable = p.browser == "firefox";
 
     environment.systemPackages =
-      lib.optional (cfg.browser == "librewolf") pkgs.librewolf
-      ++ lib.optional (cfg.browser == "falkon") pkgs.falkon
-      ++ lib.optional (cfg.browser == "qutebrowser") pkgs.qutebrowser
-      ++ lib.optional cfg.apps.chrome pkgs.google-chrome;
+      lib.optional (p.browser == "librewolf") pkgs.librewolf
+      ++ lib.optional (p.browser == "falkon") pkgs.falkon
+      ++ lib.optional (p.browser == "qutebrowser") pkgs.qutebrowser
+      ++ lib.optional web.chrome pkgs.google-chrome
+      ++ lib.optional web.tor pkgs.tor-browser;
   };
 }

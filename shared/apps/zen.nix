@@ -1,7 +1,7 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  config = lib.mkIf config.mey.profile.apps.zen {
+  config = lib.mkIf (config.mey.profile.apps.web.enable && config.mey.profile.apps.web.zen) {
     environment.systemPackages = [
       (pkgs.wrapFirefox
         inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.zen-browser-unwrapped

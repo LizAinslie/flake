@@ -1,24 +1,20 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, ... }:
 
+let
+  g = config.mey.profile.apps.games;
+in
 {
-  # imports = [
-    # inputs.aethermesh.nixosModules.default;
-  # ];
+  config = lib.mkIf g.enable {
+    environment.systemPackages =
+      lib.optional g.steam pkgs.steam
+      ++ lib.optional g.protonup pkgs.protonup-qt;
 
-  # programs.aethermesh.enable = true;
+    programs.steam = lib.mkIf g.steam {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+    };
 
-  environment.systemPackages = with pkgs; [
-    # proton-ge-bin
-    protonup-qt
-    steam
-  ];
-
-  programs.steam = {
-    enable = true; # Master switch, already covered in installation
-    remotePlay.openFirewall = true;  # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports for Source Dedicated Server hosting
-    # Other general flags if available can be set here.
+    programs.gamemode.enable = g.gamemode;
   };
-
-  programs.gamemode.enable = true;
 }
