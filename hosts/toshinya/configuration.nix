@@ -34,12 +34,5 @@
     };
   };
 
-  services.openssh.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    cryptsetup
-    btrfs-progs
-  ];
-
   system.stateVersion = "26.05";
 }

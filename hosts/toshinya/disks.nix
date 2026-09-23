@@ -1,14 +1,8 @@
-# Fill the three REPLACE_* strings from the installer:
-#   lsblk -o NAME,FSTYPE,UUID,PARTUUID
-#   blkid /dev/sda2 /dev/sda3 /dev/sda4
-# sda2 = /boot UUID, sda3 = swap PARTUUID, sda4 = LUKS UUID (not the btrfs UUID).
 { ... }:
 
 {
-  boot.initrd.luks.devices."luks-toshinya" = {
-    device = "/dev/disk/by-uuid/REPLACE_LUKS_UUID";
-    allowDiscards = true;
-  };
+  boot.initrd.luks.devices."luks-toshinya".device =
+    "/dev/disk/by-uuid/f7407945-e385-4505-9686-a5a38a16e0aa";
 
   fileSystems."/" = {
     device = "/dev/mapper/luks-toshinya";
@@ -29,17 +23,15 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/REPLACE_BOOT_UUID";
+    device = "/dev/disk/by-uuid/b4e34e22-1020-4b33-8cb6-d0b2b69edd7e";
     fsType = "ext4";
   };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-partuuid/REPLACE_SWAP_PARTUUID";
-      randomEncryption = {
-        enable = true;
-        allowDiscards = true;
-      };
-    }
-  ];
+  swapDevices = [{
+    device = "/dev/disk/by-partuuid/11420961-cd7c-49c0-aa6a-fb32d1ab8df7";
+    randomEncryption = {
+      enable = true;
+      allowDiscards = true;
+    };
+  }];
 }
