@@ -22,6 +22,7 @@ in
   imports = [
     inputs.catppuccin.homeModules.catppuccin
     ../../shared/storage.nix
+    ./look.nix
   ];
 
   catppuccin = {
