@@ -57,6 +57,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-bak";
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.sharedModules = [
                 vicinae.homeManagerModules.default
