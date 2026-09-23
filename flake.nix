@@ -60,7 +60,7 @@
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.sharedModules = [
                 vicinae.homeManagerModules.default
-                plasma-manager.homeManagerModules.plasma-manager
+                plasma-manager.homeModules.plasma-manager
               ];
               home-manager.users.mey = import ./home/mey/home.nix;
             }
