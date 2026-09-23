@@ -3,7 +3,6 @@
 let
   p = config.mey.profile;
   sessionRoot = "${config.services.displayManager.sessionData.desktops}";
-  tuigreet = lib.getExe pkgs.tuigreet;
 in
 {
   config = lib.mkIf (p.displayManager == "greetd") {
@@ -14,7 +13,7 @@ in
       settings = {
         default_session = {
           command = lib.concatStringsSep " " [
-            tuigreet
+            (lib.getExe pkgs.tuigreet)
             "--time"
             "--remember"
             "--remember-session"
