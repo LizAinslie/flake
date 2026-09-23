@@ -18,13 +18,15 @@ in
             "--remember"
             "--remember-session"
             "--sessions"
-            "${sessionRoot}/share/xsessions:${sessionRoot}/share/wayland-sessions"
+            "${sessionRoot}/share/wayland-sessions"
+            "--xsessions"
+            "${sessionRoot}/share/xsessions"
           ];
           user = "greeter";
         };
       };
     };
 
-    environment.systemPackages = [ pkgs.tuigreet ];
+    environment.systemPackages = [ pkgs.tuigreet pkgs.xorg.xinit ];
   };
 }
