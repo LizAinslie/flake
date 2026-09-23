@@ -46,7 +46,9 @@ with lib;
       social = mkEnableOption "discord/telegram" // { default = true; };
       media = mkEnableOption "vlc" // { default = true; };
       spotify = mkEnableOption "spotify" // { default = true; };
-      extras = mkEnableOption "obsidian/filelight/zed" // { default = true; };
+      zed = mkEnableOption "Zed editor" // { default = true; };
+      tor = mkEnableOption "Tor Browser" // { default = true; };
+      extras = mkEnableOption "obsidian/filelight" // { default = true; };
     };
   };
 }

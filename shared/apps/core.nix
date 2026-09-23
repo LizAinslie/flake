@@ -1,5 +1,8 @@
 { config, lib, pkgs, ... }:
 
+let
+  a = config.mey.profile.apps;
+in
 {
   imports = [
     ./web.nix
@@ -12,9 +15,10 @@
     openssl
     tailscale
     nmap
-  ] ++ lib.optionals config.mey.profile.apps.extras [
-    kdePackages.filelight
-    obsidian
-    zed-editor
-  ];
+  ] ++ lib.optional a.zed zed-editor
+    ++ lib.optional a.tor tor-browser
+    ++ lib.optionals a.extras [
+      kdePackages.filelight
+      obsidian
+    ];
 }

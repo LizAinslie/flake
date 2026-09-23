@@ -35,6 +35,8 @@
       social = true;
       media = true;
       spotify = true;
+      zed = true;
+      tor = true;
       extras = true;
     };
   };

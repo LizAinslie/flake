@@ -30,6 +30,8 @@
       social = false;
       media = true;
       spotify = false;
+      zed = true;
+      tor = true;
       extras = false;
     };
   };
