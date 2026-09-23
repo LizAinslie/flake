@@ -50,6 +50,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.sharedModules = [ vicinae.homeManagerModules.default ];
               home-manager.users.mey = import ./home/mey/home.nix;
             }
           ] ++ extraModules;
@@ -59,11 +60,6 @@
       nixosConfigurations = {
         meyower = mkHost {
           hostPath = ./hosts/meyower/configuration.nix;
-          extraModules = [
-            ({ ... }: {
-              home-manager.sharedModules = [ vicinae.homeManagerModules.default ];
-            })
-          ];
         };
 
         toshinya = mkHost {

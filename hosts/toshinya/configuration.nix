@@ -34,5 +34,11 @@
     };
   };
 
+  # Don't compile vicinae on the E-300.
+  nix.settings.extra-substituters = [ "https://vicinae.cachix.org" ];
+  nix.settings.extra-trusted-public-keys = [
+    "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+  ];
+
   system.stateVersion = "26.05";
 }
