@@ -1,5 +1,13 @@
-{ config, pkgs, inputs, lib, ... }:
+{ config, pkgs, inputs, lib, osConfig, ... }:
 
+let
+  profile = osConfig.mey.profile;
+  wantHypr =
+    profile.desktop == "hypr"
+    || profile.desktop == "plasma+hypr"
+    || builtins.elem "hypr" profile.sessions;
+  wantI3Eww = builtins.elem "i3-eww" profile.sessions;
+in
 {
   imports = [
     inputs.catppuccin.homeModules.catppuccin
@@ -13,11 +21,13 @@
     accent = "mauve";
   };
 
-  programs.kitty = {
+  programs.kitty.enable = true;
+
+  programs.eww = lib.mkIf wantI3Eww {
     enable = true;
+    enableBashIntegration = false;
   };
 
-  # ssh
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
@@ -36,15 +46,11 @@
     };
   };
 
-  # gpg
-
   programs.gpg = {
     enable = true;
     homedir = "${config.home.homeDirectory}/.gnupg";
   };
-  services.gpg-agent = {
-    enable = true;
-  };
+  services.gpg-agent.enable = true;
   home.activation = {
     fixGpgPermissions = lib.hm.dag.entryAfter ["writeBoundary"] ''
       if [ -d "${config.home.homeDirectory}/.gnupg" ]; then
@@ -53,7 +59,6 @@
     '';
   };
 
-  # git
   programs.git = {
     enable = true;
 
@@ -72,8 +77,6 @@
     };
   };
 
-
-  # catppuccin for konsole
   xdg.dataFile."konsole/CatppuccinMochaMauve.colorscheme".text = ''
     [General]
     Description=Catppuccin Mocha Mauve
@@ -141,7 +144,7 @@
     Color=205,214,244
   '';
 
-  wayland.windowManager.hyprland.enable = true;
+  wayland.windowManager.hyprland.enable = wantHypr;
 
   home.username = "mey";
   home.homeDirectory = "/home/mey";
