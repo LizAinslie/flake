@@ -39,7 +39,7 @@ in
 
   programs.vicinae = lib.mkIf wantVicinae {
     enable = true;
-    useLayerShell = wantHypr || wantPlasma;
+    settings.launcher_window.layer_shell.enabled = wantHypr || wantPlasma;
   };
 
   programs.plasma = lib.mkIf wantPlasma {
