@@ -2,10 +2,14 @@
 
 let
   profile = osConfig.mey.profile;
+  onMeyower = osConfig.networking.hostName == "meyower";
   wantHypr =
-    profile.desktop == "hypr"
-    || profile.desktop == "plasma+hypr"
-    || builtins.elem "hypr" profile.sessions;
+    onMeyower
+    && (
+      profile.desktop == "hypr"
+      || profile.desktop == "plasma+hypr"
+      || builtins.elem "hypr" profile.sessions
+    );
   wantPlasma =
     profile.desktop == "plasma"
     || profile.desktop == "plasma+hypr"
@@ -48,13 +52,12 @@ in
     shortcuts."services/plasma-manager-commands.desktop".vicinae = "Meta+Space";
   };
 
-  # Hyprland 0.55+ : hyprland.lua. Package comes from the NixOS module (Hyprland flake).
-  wayland.windowManager.hyprland = {
-    enable = wantHypr;
+  wayland.windowManager.hyprland = lib.mkIf wantHypr {
+    enable = true;
     package = null;
     portalPackage = null;
     configType = "lua";
-    extraConfig = lib.mkIf wantHypr ''
+    extraConfig = ''
       hl.bind("SUPER + SPACE", function()
         hl.exec_cmd("vicinae toggle")
       end)
