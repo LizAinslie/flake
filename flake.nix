@@ -1,6 +1,13 @@
 {
   description = "Meyower Flakey :3";
 
+  nixConfig = {
+    extra-substituters = [ "https://vicinae.cachix.org" ];
+    extra-trusted-public-keys = [
+      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -32,10 +39,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vicinae = {
-      url = "github:vicinaehq/vicinae";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # Do not follows nixpkgs — cache only has their lock.
+    vicinae.url = "github:vicinaehq/vicinae";
 
     grok-bot = {
       url = "github:jordangarrison/grok-bot-flake";
