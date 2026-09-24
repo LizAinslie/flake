@@ -1,56 +1,47 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
+let
+  p = config.mey.profile;
+in
 {
+  imports = [ ./profile.nix ];
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # shell
   programs.fish.enable = true;
   programs.fish.shellAbbrs = {
-    # system flake management shortcuts
-    nrs = "sudo nixos-rebuild switch --flake /etc/nixos#meyower";
+    nrs = "sudo nixos-rebuild switch --flake /etc/nixos#${config.networking.hostName}";
     nfu = "nix flake update /etc/nixos";
     nadd = "git -C /etc/nixos add .";
-
-    # qol shortcuts
     ll = "ls -l";
     la = "ls -la";
   };
 
   programs.command-not-found.enable = true;
 
-  # boot
   boot.loader = {
     systemd-boot.enable = false;
-
     grub = {
       enable = true;
-      device = "nodev"; # required for EFI
-      efiSupport = true;
-      enableCryptodisk = true;
+      device = p.grubDevice;
+      efiSupport = p.firmware == "efi";
+      enableCryptodisk = p.firmware == "efi";
     };
-
     efi = {
-      canTouchEfiVariables = true;
+      canTouchEfiVariables = p.firmware == "efi";
       efiSysMountPoint = "/boot";
     };
   };
 
-  # latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages =
+    if p.kernel == "latest"
+    then pkgs.linuxPackages_latest
+    else pkgs.linuxPackages;
 
-  # networking
   networking.networkmanager.enable = true;
 
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # time
   time.timeZone = "America/Chicago";
 
-  # i18n
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_US.UTF-8";
@@ -64,17 +55,14 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # x11
   services.xserver.enable = true;
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-  # document printing with CUPS
   services.printing.enable = true;
 
-  # pipewire
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -86,24 +74,16 @@
     wireplumber.enable = true;
   };
 
-  # libGL/libEGL for Nix-patched runtimes (JetBrains JBR, Android Studio) and
-  # for unpatched JVMs run through nix-ld (Compose/Skiko dlopens libGL.so.1).
-  # List definitions of sessionVariables are concatenated with ":", so the
-  # pipewire-jack entry above is preserved.
   environment.sessionVariables.LD_LIBRARY_PATH = [ "${pkgs.libglvnd}/lib" ];
 
-  # gpg
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
 
-  # greeter
-  services.displayManager = {
-    sddm = {
-      enable = true;
-      wayland.enable = true;
-    };
+  services.displayManager.sddm = {
+    enable = p.displayManager == "sddm";
+    wayland.enable = p.displayManager == "sddm";
   };
 
   nixpkgs.config.allowUnfree = true;
@@ -113,7 +93,6 @@
     package = pkgs.usbmuxd2;
   };
 
-  # packages
   environment.systemPackages = with pkgs; [
     fastfetch
     wget
