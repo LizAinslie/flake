@@ -7,7 +7,7 @@
       "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcaenzgTizIcI3oc="
+      "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
@@ -15,7 +15,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    # Keep Hyprland on its own nixpkgs lock or the cache misses.
     hyprland.url = "github:hyprwm/Hyprland";
 
     catppuccin = {
