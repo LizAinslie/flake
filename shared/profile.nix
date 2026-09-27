@@ -51,7 +51,8 @@ in
       };
       social = {
         enable = flag "social group";
-        discord = flag "Discord";
+        discord = mkEnableOption "Discord" // { default = false; };
+        fluxer = flag "Fluxer";
         telegram = flag "Telegram";
       };
       media = {

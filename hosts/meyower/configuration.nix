@@ -30,7 +30,11 @@
     browser = "firefox";
     apps = {
       web.enable = true;
-      social.enable = true;
+      social = {
+        enable = true;
+        discord = false;
+        fluxer = true;
+      };
       media.enable = true;
       studio.enable = true;
       tools.enable = true;
