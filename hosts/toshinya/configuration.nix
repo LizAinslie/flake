@@ -36,6 +36,7 @@
         vlc = true;
         spotify = false;
       };
+      studio.enable = false;
       tools = {
         enable = true;
         zed = true;

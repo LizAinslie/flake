@@ -59,6 +59,10 @@ in
         vlc = flag "VLC";
         spotify = flag "Spotify";
       };
+      studio = {
+        enable = mkEnableOption "media production / recording / streaming" // { default = false; };
+        obs = flag "OBS Studio";
+      };
       tools = {
         enable = flag "tools group";
         zed = flag "Zed";

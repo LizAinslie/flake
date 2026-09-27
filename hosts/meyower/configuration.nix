@@ -8,7 +8,7 @@
 
     ../../shared/apps/core.nix
     ../../shared/apps/dev.nix
-    # games.nix is pulled in via apps/core.nix and gated on apps.games.enable
+    # games.nix / studio.nix are pulled in via apps/core.nix and gated on profile flags
 
     ../../shared/graphics/nvidia.nix
 
@@ -32,6 +32,7 @@
       web.enable = true;
       social.enable = true;
       media.enable = true;
+      studio.enable = true;
       tools.enable = true;
       games.enable = true;
     };

@@ -8,6 +8,7 @@ in
     ./web.nix
     ./social.nix
     ./media.nix
+    ./studio.nix
     ./zen.nix
     ./games.nix
   ];
