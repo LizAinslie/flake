@@ -63,6 +63,8 @@ in
       studio = {
         enable = mkEnableOption "media production / recording / streaming" // { default = false; };
         obs = flag "OBS Studio";
+        kdenlive = flag "Kdenlive";
+        resolve = flag "DaVinci Resolve (free)";
       };
       tools = {
         enable = flag "tools group";
