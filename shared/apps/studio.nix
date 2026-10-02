@@ -26,7 +26,7 @@ in
     };
 
     environment.systemPackages =
-      lib.optional s.kdenlive pkgs.kdenlive
+      lib.optional s.kdenlive pkgs.kdePackages.kdenlive
       ++ lib.optionals s.resolve [
         pkgs.davinci-resolve
         pkgs.ffmpeg
