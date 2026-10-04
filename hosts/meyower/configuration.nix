@@ -42,6 +42,16 @@
     };
   };
 
+  # Session stays on whatever the display is wired to. Games get an ICD
+  # manifest that cannot see Raphael or llvmpipe.
+  mey.graphics.gameDevice = {
+    enable = true;
+    name = "NVIDIA GeForce RTX 3080";
+    vendor = "10de";
+    device = "2206";
+    driver = "nvidia";
+  };
+
   services.displayManager.defaultSession = "plasma";
 
   swapDevices = [
