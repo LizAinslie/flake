@@ -4,7 +4,10 @@ let
   p = config.mey.profile;
 in
 {
-  imports = [ ./profile.nix ];
+  imports = [
+    ./profile.nix
+    ./graphics/game-device.nix
+  ];
 
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
