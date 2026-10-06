@@ -11,6 +11,7 @@ in
     ./studio.nix
     ./zen.nix
     ./games.nix
+    ./wireguard.nix
   ];
 
   environment.systemPackages = with pkgs; [

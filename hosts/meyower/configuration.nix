@@ -8,7 +8,7 @@
 
     ../../shared/apps/core.nix
     ../../shared/apps/dev.nix
-    # games.nix / studio.nix are pulled in via apps/core.nix and gated on profile flags
+    # games.nix / studio.nix / wireguard.nix are pulled in via apps/core.nix and gated on profile flags
 
     ../../shared/graphics/nvidia.nix
 
@@ -39,6 +39,7 @@
       studio.enable = true;
       tools.enable = true;
       games.enable = true;
+      vpn.enable = true;
     };
   };
 

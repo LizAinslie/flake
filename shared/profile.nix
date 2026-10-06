@@ -75,9 +75,18 @@ in
       games = {
         enable = mkEnableOption "games group" // { default = false; };
         steam = flag "Steam";
+        protonGe = flag "Proton GE 10 (GE-Proton10-34)";
         protonup = flag "protonup-qt";
         gamemode = flag "Feral GameMode";
         prism = flag "Prism Launcher";
+      };
+      vpn = {
+        enable = flag "WireGuard, importing confs from ~/vpns";
+        confDir = mkOption {
+          type = types.str;
+          default = "/home/mey/vpns";
+          description = "Directory of WireGuard .conf files imported into NetworkManager.";
+        };
       };
     };
   };

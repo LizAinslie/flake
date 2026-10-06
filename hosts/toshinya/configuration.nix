@@ -44,6 +44,7 @@
         filelight = false;
       };
       games.enable = false;
+      vpn.enable = true;
     };
   };
 
