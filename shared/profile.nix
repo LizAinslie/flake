@@ -79,6 +79,14 @@ in
         protonup = flag "protonup-qt";
         gamemode = flag "Feral GameMode";
       };
+      vpn = {
+        enable = flag "WireGuard, importing confs from ~/vpns";
+        confDir = mkOption {
+          type = types.str;
+          default = "/home/mey/vpns";
+          description = "Directory of WireGuard .conf files imported into NetworkManager.";
+        };
+      };
     };
   };
 }
