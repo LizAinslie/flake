@@ -77,6 +77,7 @@ in
         steam = flag "Steam";
         protonup = flag "protonup-qt";
         gamemode = flag "Feral GameMode";
+        prism = flag "Prism Launcher";
       };
     };
   };
