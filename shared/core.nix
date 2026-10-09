@@ -19,6 +19,14 @@ in
     ];
   };
 
+  # /etc/nixos is the flake checkout. wheel (sudoers) can read and write it
+  # without becoming root. `d` creates the dir; `Z` resets the existing tree.
+  # Applied from shared/core.nix so every host that imports it gets it.
+  systemd.tmpfiles.rules = [
+    "d /etc/nixos 0775 root wheel - -"
+    "Z /etc/nixos 0775 root wheel - -"
+  ];
+
   programs.fish.enable = true;
   programs.fish.shellAbbrs = {
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos#${config.networking.hostName}";
