@@ -27,6 +27,14 @@ in
     "Z /etc/nixos 0775 root wheel - -"
   ];
 
+  # Z leaves the tree owned by root. Git 2.35+ refuses that as "dubious
+  # ownership" unless the path is in safe.directory. /etc/gitconfig covers
+  # mey and root (sudo git).
+  programs.git = {
+    enable = true;
+    config.safe.directory = [ "/etc/nixos" ];
+  };
+
   programs.fish.enable = true;
   programs.fish.shellAbbrs = {
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos#${config.networking.hostName}";
