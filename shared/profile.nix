@@ -45,6 +45,7 @@ in
     apps = {
       web = {
         enable = flag "web/browser group";
+        firefox = flag "Firefox";
         chrome = flag "Google Chrome";
         zen = flag "Zen Browser";
         tor = flag "Tor Browser";
