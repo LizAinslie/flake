@@ -90,6 +90,54 @@
         Alias = "@jsr";
       }
       {
+        Name = "docs.rs";
+        URLTemplate = "https://docs.rs/releases/search?query={searchTerms}";
+        IconURL = "https://docs.rs/favicon.ico";
+        Alias = "@drs";
+      }
+      {
+        Name = "crates.io";
+        URLTemplate = "https://crates.io/search?q={searchTerms}";
+        IconURL = "https://crates.io/favicon.ico";
+        Alias = "@crate";
+      }
+      {
+        Name = "Maven Repository";
+        URLTemplate = "https://mvnrepository.com/search?q={searchTerms}";
+        IconURL = "https://mvnrepository.com/favicon.ico";
+        Alias = "@mvn";
+      }
+      {
+        Name = "hex.pm";
+        URLTemplate = "https://hex.pm/packages?search={searchTerms}";
+        IconURL = "https://hex.pm/favicon.ico";
+        Alias = "@hex";
+      }
+      {
+        Name = "Docker Hub";
+        URLTemplate = "https://hub.docker.com/search?q={searchTerms}";
+        IconURL = "https://hub.docker.com/favicon.ico";
+        Alias = "@dh";
+      }
+      {
+        Name = "MDN";
+        URLTemplate = "https://developer.mozilla.org/en-US/search?q={searchTerms}";
+        IconURL = "https://developer.mozilla.org/favicon.ico";
+        Alias = "@mdn";
+      }
+      {
+        Name = "Stack Overflow";
+        URLTemplate = "https://stackoverflow.com/search?q={searchTerms}";
+        IconURL = "https://stackoverflow.com/favicon.ico";
+        Alias = "@so";
+      }
+      {
+        Name = "cppreference";
+        URLTemplate = "https://en.cppreference.com/mwiki/index.php?title=Special:Search&search={searchTerms}";
+        IconURL = "https://en.cppreference.com/favicon.ico";
+        Alias = "@cpp";
+      }
+      {
         Name = "Arch Wiki";
         URLTemplate = "https://wiki.archlinux.org/index.php?search={searchTerms}";
         IconURL = "https://wiki.archlinux.org/favicon.ico";
@@ -106,6 +154,18 @@
         URLTemplate = "https://aur.archlinux.org/packages?K={searchTerms}";
         IconURL = "https://aur.archlinux.org/static/images/favicon.png";
         Alias = "@aur";
+      }
+      {
+        Name = "ProtonDB";
+        URLTemplate = "https://www.protondb.com/search?q={searchTerms}";
+        IconURL = "https://www.protondb.com/favicon.ico";
+        Alias = "@pdb";
+      }
+      {
+        Name = "SteamDB";
+        URLTemplate = "https://steamdb.info/search/?a=app&q={searchTerms}";
+        IconURL = "https://steamdb.info/favicon.ico";
+        Alias = "@sdb";
       }
     ];
   };
