@@ -11,28 +11,6 @@ let
   });
   wantFirefox = web.firefox || p.browser == "firefox";
   wantLibreWolf = p.browser == "librewolf";
-
-  # Tor Browser ships its own distribution/policies.json. Overlay ours beside
-  # the real install dir when that directory exists; also drop a copy where
-  # Firefox-based builds look under /etc.
-  torBrowser = pkgs.runCommand "tor-browser-with-policies" { } ''
-    mkdir -p $out/bin $out/share
-    ln -s ${pkgs.tor-browser}/bin/tor-browser $out/bin/tor-browser
-    if [[ -d ${pkgs.tor-browser}/share ]]; then
-      ln -s ${pkgs.tor-browser}/share/* $out/share/ || true
-    fi
-    dist=$(find ${pkgs.tor-browser} -type d -name distribution -print -quit || true)
-    if [[ -n "$dist" ]]; then
-      rel="''${dist#${pkgs.tor-browser}/}"
-      rm -rf "$out/$rel"
-      mkdir -p "$out/$rel"
-      if [[ -d "$dist" ]]; then
-        ln -s "$dist"/* "$out/$rel/" || true
-      fi
-      rm -f "$out/$rel/policies.json"
-      ln -s ${policiesJson} "$out/$rel/policies.json"
-    fi
-  '';
 in
 {
   config = lib.mkIf web.enable {
@@ -41,6 +19,10 @@ in
       policies = lib.mkIf wantFirefox policies;
     };
 
+    # LibreWolf reads /etc/librewolf/policies. Tor Browser reads the
+    # policies.json baked into its own package, not a symlink farm, so this
+    # file is best-effort only. Do not overlay the store path: rm follows
+    # those symlinks and the build dies with EACCES.
     environment.etc = lib.mkMerge [
       (lib.mkIf wantLibreWolf {
         "librewolf/policies/policies.json".source = policiesJson;
@@ -55,6 +37,6 @@ in
       ++ lib.optional (p.browser == "falkon") pkgs.falkon
       ++ lib.optional (p.browser == "qutebrowser") pkgs.qutebrowser
       ++ lib.optional web.chrome pkgs.google-chrome
-      ++ lib.optional web.tor torBrowser;
+      ++ lib.optional web.tor pkgs.tor-browser;
   };
 }
