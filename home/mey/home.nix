@@ -23,6 +23,7 @@ in
     inputs.catppuccin.homeModules.catppuccin
     ../../shared/storage.nix
     ./look.nix
+    ./ksnip.nix
   ];
 
   catppuccin = {
