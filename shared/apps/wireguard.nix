@@ -4,6 +4,9 @@ let
   v = config.mey.profile.apps.vpn;
   confDir = v.confDir;
 
+  # Kept out of the indented script: two single quotes would end the Nix string.
+  stripKeyQuotes = lib.escapeShellArg "s/^([[:space:]]*(PrivateKey|PresharedKey|PublicKey)[[:space:]]*=[[:space:]]*)[\"']([^\"']*)[\"'][[:space:]]*$/\\1\\3/";
+
   # Runtime import so private keys never land in the Nix store.
   # nmcli import rejects a PrivateKey that is quoted, CRLF-padded, or not
   # exactly 32-byte base64 ("invalid secret 'PrivateKey'"). Normalize first.
@@ -23,16 +26,16 @@ let
       local key=""
       sed -e $'1s/^\xef\xbb\xbf//' -e 's/\r$//' "$src" \
         | sed -E \
-            -e 's/^([[:space:]]*(PrivateKey|PresharedKey|PublicKey)[[:space:]]*=[[:space:]]*)["'\'']([^"'\'']*)["'\''][[:space:]]*$/\1\3/' \
-            -e 's/&/\&/g; s/&#43;/+/g; s/&plus;/+/g' \
+            -e ${stripKeyQuotes} \
+            -e 's/&#43;/+/g; s/&plus;/+/g' \
         > "$dest"
       chmod 600 "$dest"
 
-      key=$(awk -F= '
+      key=$(awk -F= -v q="'" '
         $1 ~ /^[[:space:]]*PrivateKey[[:space:]]*$/ {
           v = $2
           gsub(/^[[:space:]]+|[[:space:]]+$/, "", v)
-          gsub(/^["'\'']|["'\'']$/, "", v)
+          gsub("^[" q "]+|[" q "]+$", "", v)
           gsub(/[[:space:]]/, "", v)
           print v
           exit
