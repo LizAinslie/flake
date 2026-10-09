@@ -65,6 +65,48 @@
         IconURL = "https://noogle.dev/favicon.ico";
         Alias = "@ng";
       }
+      {
+        Name = "npm";
+        URLTemplate = "https://www.npmjs.com/search?q={searchTerms}";
+        IconURL = "https://www.npmjs.com/favicon.ico";
+        Alias = "@npm";
+      }
+      {
+        Name = "GitHub";
+        URLTemplate = "https://github.com/search?q={searchTerms}";
+        IconURL = "https://github.com/favicon.ico";
+        Alias = "@gh";
+      }
+      {
+        Name = "klibs.io";
+        URLTemplate = "https://klibs.io/?q={searchTerms}";
+        IconURL = "https://klibs.io/favicon.ico";
+        Alias = "@kl";
+      }
+      {
+        Name = "JSR";
+        URLTemplate = "https://jsr.io/packages?search={searchTerms}";
+        IconURL = "https://jsr.io/favicon.ico";
+        Alias = "@jsr";
+      }
+      {
+        Name = "Arch Wiki";
+        URLTemplate = "https://wiki.archlinux.org/index.php?search={searchTerms}";
+        IconURL = "https://wiki.archlinux.org/favicon.ico";
+        Alias = "@aw";
+      }
+      {
+        Name = "Arch packages";
+        URLTemplate = "https://archlinux.org/packages/?q={searchTerms}";
+        IconURL = "https://archlinux.org/static/favicon.png";
+        Alias = "@ap";
+      }
+      {
+        Name = "AUR";
+        URLTemplate = "https://aur.archlinux.org/packages?K={searchTerms}";
+        IconURL = "https://aur.archlinux.org/static/images/favicon.png";
+        Alias = "@aur";
+      }
     ];
   };
 }
