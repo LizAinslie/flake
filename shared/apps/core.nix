@@ -12,6 +12,7 @@ in
     ./zen.nix
     ./games.nix
     ./wireguard.nix
+    ./ksnip.nix
   ];
 
   environment.systemPackages = with pkgs; [
