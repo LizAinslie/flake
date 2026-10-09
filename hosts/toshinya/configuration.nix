@@ -22,10 +22,11 @@
     desktop = "none";
     sessions = [ "lxqt" "i3-eww" ];
     displayManager = "greetd";
-    browser = "librewolf";
+    browser = "firefox";
     apps = {
       web = {
         enable = true;
+        firefox = true;
         chrome = false;
         zen = false;
         tor = true;
