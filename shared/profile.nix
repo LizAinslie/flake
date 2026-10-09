@@ -71,6 +71,7 @@ in
         zed = flag "Zed";
         obsidian = flag "Obsidian";
         filelight = flag "Filelight";
+        ksnip = flag "ksnip screenshot tool";
       };
       games = {
         enable = mkEnableOption "games group" // { default = false; };
