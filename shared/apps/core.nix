@@ -22,5 +22,6 @@ in
     lib.optional tools.zed zed-editor
     ++ lib.optional tools.obsidian obsidian
     ++ lib.optional tools.filelight kdePackages.filelight
+    ++ lib.optional tools.ksnip ksnip
   );
 }
