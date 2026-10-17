@@ -12,7 +12,7 @@
         host all all samehost scram-sha-256
     '';
 
-    ensureDatabases = [ "orbit" "kalendee" ];
+    ensureDatabases = [ "orbit" "kalendee" "solynchost" ];
 
     ensureUsers = [
       {
@@ -31,6 +31,15 @@
           createrole = true;
           createdb = true;
           password = "SCRAM-SHA-256$4096:zbwMUpBA8KUBlfmEi72ilg==$3/rZQVaZMjUoJCFYbwk4jbpMOKhPbMlxOIM4hahW5vM=:HhQwvBf6RcUCLy7YnVQm/bJRRXEjtCS5aOcjJ06sdB0=";
+        };
+      }
+      {
+        name = "solynchost";
+        ensureDBOwnership = true;
+        ensureClauses = {
+          createrole = true;
+          createdb = true;
+          password = "SCRAM-SHA-256$4096:TQ5e/zR82f9vh76Fg6lDMg==$/pT6TTPNOD8BI2E7ml/Hqt0fWarcKE9LoMHF564cKxQ=:Qrc7CelBmaGrQ7ZEVpGZOKguflutPnBcyxJmVbjFM6k=";
         };
       }
     ];
@@ -52,6 +61,7 @@
     gh
     docker
     figma-linux
+    cmake
 
     inputs.grok-bot.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];

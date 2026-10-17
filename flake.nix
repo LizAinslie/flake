@@ -54,6 +54,12 @@
       url = "github:Hy4ri/fluxer-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    epic-games-launcher = {
+      url = "github:kjetteren/epic-games-launcher-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = { self, nixpkgs, catppuccin, home-manager, plasma-manager, sops-nix, vicinae, ... }@inputs:

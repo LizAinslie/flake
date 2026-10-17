@@ -182,7 +182,7 @@ in
       "ryuma" = {
         AddKeysToAgent = "yes";
         Port = 2222;
-        HostName = "192.168.68.59";
+        HostName = "192.168.68.56";
         IdentityFile = "~/.ssh/id_ed25519";
       };
     };

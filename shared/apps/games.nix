@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   g = config.mey.profile.apps.games;
@@ -43,6 +43,10 @@ let
   });
 in
 {
+  imports = [
+    inputs.epic-games-launcher.nixosModules.default
+  ];
+
   config = lib.mkIf g.enable {
     environment.systemPackages =
       lib.optional g.steam pkgs.steam
@@ -56,7 +60,10 @@ in
       extraCompatPackages = lib.optional g.protonGe proton-ge-10;
     };
 
-    programs.gamemode.enable = g.gamemode;
+    programs.epic-games-launcher = lib.mkIf g.epic {
+      enable = true;
+    };
 
+    programs.gamemode.enable = g.gamemode;
   };
 }

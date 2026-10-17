@@ -77,6 +77,7 @@ in
       games = {
         enable = mkEnableOption "games group" // { default = false; };
         steam = flag "Steam";
+        epic = flag "Epic Games";
         protonGe = flag "Proton GE 10 (GE-Proton10-34)";
         protonup = flag "protonup-qt";
         gamemode = flag "Feral GameMode";
