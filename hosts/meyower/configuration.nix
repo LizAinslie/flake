@@ -32,7 +32,7 @@
       web.enable = true;
       social = {
         enable = true;
-        discord = false;
+        discord = true;
         fluxer = true;
       };
       media.enable = true;
