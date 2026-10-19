@@ -66,6 +66,18 @@ in
   config = lib.mkIf (tools.enable && tools.ksnip) {
     home.packages = [ pkgs.wl-clipboard pkgs.xclip ];
 
+    # ShareX-style: Ctrl+Print = region, upload straight away, URL to clipboard.
+    programs.plasma.hotkeys.commands."shot-upload" = {
+      name = "Region screenshot and upload";
+      key = "Ctrl+Print";
+      command = "${pkgs.writeShellScript "shot-upload" ''
+        f=$(mktemp --suffix=.png)
+        spectacle -bnr -o "$f" && [ -s "$f" ] && ${uploadScript} "$f"
+        rm -f "$f"
+      ''}";
+    };
+    programs.plasma.shortcuts."services/plasma-manager-commands.desktop".shot-upload = "Ctrl+Print";
+
     # ksnip stores UploaderType as an int: Imgur=0, Script=1, Ftp=2.
     # Plasma Wayland: KWin refuses its private screenshot API to ksnip, so go via xdg-desktop-portal.
     # StopOnStdErr key is misspelled upstream (UploadScriptStoOnStdErr).
