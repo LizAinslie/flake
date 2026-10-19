@@ -47,6 +47,20 @@ let
 
     "$notify" "Image Uploader" "Uploaded to $(${pkgs.coreutils}/bin/basename "$provider")" --icon=dialog-information
   '';
+  managedConf = pkgs.writeText "ksnip-managed.conf" ''
+    [Application]
+    ForceGenericWaylandEnabled=true
+    ScaleGenericWaylandScreenshotsEnabled=true
+
+    [Uploader]
+    UploaderType=1
+
+    [UploadScript]
+    UploadScriptPath=${uploadScript}
+    CopyOutputToClipboard=true
+    UploadScriptStoOnStdErr=false
+    CopyOutputFilter=
+  '';
 in
 {
   config = lib.mkIf (tools.enable && tools.ksnip) {
@@ -55,19 +69,16 @@ in
     # ksnip stores UploaderType as an int: Imgur=0, Script=1, Ftp=2.
     # Plasma Wayland: KWin refuses its private screenshot API to ksnip, so go via xdg-desktop-portal.
     # StopOnStdErr key is misspelled upstream (UploadScriptStoOnStdErr).
-    xdg.configFile."ksnip/ksnip.conf".text = ''
-      [Application]
-      ForceGenericWaylandEnabled=true
-      ScaleGenericWaylandScreenshotsEnabled=true
-
-      [Uploader]
-      UploaderType=1
-
-      [UploadScript]
-      UploadScriptPath=${uploadScript}
-      CopyOutputToClipboard=true
-      UploadScriptStoOnStdErr=false
-      CopyOutputFilter=
+    # Writable file: ksnip saves its own settings, so instead of a read-only store
+    # symlink we merge these managed keys into ~/.config/ksnip/ksnip.conf on
+    # every activation. GUI changes persist; managed keys always win.
+    home.activation.ksnipConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      conf="${config.xdg.configHome}/ksnip/ksnip.conf"
+      run mkdir -p "$(dirname "$conf")"
+      if [ -L "$conf" ]; then run cp --remove-destination "$(readlink -f "$conf")" "$conf"; fi
+      [ -e "$conf" ] || run touch "$conf"
+      run chmod u+w "$conf"
+      run ${pkgs.crudini}/bin/crudini --merge "$conf" < ${managedConf}
     '';
   };
 }
