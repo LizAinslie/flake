@@ -121,9 +121,11 @@
         # Public repo: fail if any tracked secrets/*.yaml is not sops-encrypted.
         {
           x86_64-linux.secrets-encrypted = nixpkgs.legacyPackages.x86_64-linux.runCommand "secrets-encrypted" { } ''
+            if grep -oE "age1[02-9ac-hj-np-z]{58}\b" ${self}/.sops.yaml | grep -q .; then echo "NON-PQ RECIPIENT: .sops.yaml"; exit 1; fi
             for f in ${self}/secrets/*.yaml; do
               [ -e "$f" ] || continue
               grep -q "^sops:" "$f" || { echo "UNENCRYPTED: $f"; exit 1; }
+              if grep -oE "age1[02-9ac-hj-np-z]{58}\b" "$f" | grep -q .; then echo "NON-PQ RECIPIENT: $f"; exit 1; fi
             done
             touch $out
           '';

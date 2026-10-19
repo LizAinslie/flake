@@ -37,12 +37,20 @@ let
 
       die() { echo "secret-keeper: $*" >&2; exit 1; }
       is_encrypted() { grep -q '^sops:' "$1"; }
+      can_decrypt() { sops decrypt "$1" >/dev/null 2>&1; }
+      # Post-quantum only: any classical age1 recipient caps the file at X25519 strength.
+      classical() { grep -oE 'age1[02-9ac-hj-np-z]{58}\b' "$1" | grep -v '^age1pq1' || true; }
+      guard_pq() {
+        [[ -z $(classical "$REPO/.sops.yaml") ]] || die ".sops.yaml has a non-PQ age recipient; use age-keygen -pq"
+      }
       fileof() { [[ "$1" =~ ^[A-Za-z0-9._-]+$ ]] || die "bad name: $1"; echo "$SECRETS/''${1%.yaml}.yaml"; }
 
       # Only ever force-add files that are verifiably encrypted. secrets/ stays
       # gitignored so `git add .` can never stage a plaintext file by accident.
       track() {
         is_encrypted "$1" || die "refusing to track unencrypted $1"
+        can_decrypt "$1" || die "can't decrypt $1 with your key (encrypted to a different/old key?)"
+        [[ -z $(classical "$1") ]] || die "$1 is encrypted to a non-PQ recipient; re-encrypt it"
         git -C "$REPO" add -f "$1"
         echo "tracked $(realpath --relative-to="$REPO" "$1") (commit when ready)"
       }
@@ -95,13 +103,14 @@ let
         while IFS= read -r f; do list+=("$f"); done < <(find "$SECRETS" -maxdepth 1 -name '*.yaml' -type f)
         list+=("$REPO/.sops.yaml")
         out="$tmp/secrets-$(hostname)-$(date +%Y%m%d-%H%M%S).tar.gz.age"
-        echo "encrypting bundle (passphrase; this is what you'll need to restore):"
+        echo "backup passphrase: this is what you need to restore. empty = age generates one and prints it (save it!)"
         tar -czf - --absolute-names "''${list[@]}" | age -p -o "$out"
         deliver "$out" || { rm -rf "$tmp"; return 1; }
         rm -rf "$tmp"
       }
 
       cmd=''${1:-status}; shift || true
+      case "$cmd" in set|edit|init) guard_pq ;; esac
       case "$cmd" in
         set)
           [[ $# -eq 2 ]] || die "usage: secret-keeper set <name> <key>"
@@ -118,13 +127,13 @@ let
             mv "$f.tmp" "$f"
           fi
           unset val
-          track "$f"; do_apply; do_backup ;;
+          track "$f"; do_backup; do_apply ;;
         edit)
           [[ $# -eq 1 ]] || die "usage: secret-keeper edit <name>"
           f=$(fileof "$1")
           [[ ! -f $f ]] || is_encrypted "$f" || die "$f is plaintext; run: secret-keeper init"
           sops edit "$f"
-          track "$f"; do_apply; do_backup ;;
+          track "$f"; do_backup; do_apply ;;
         init)
           for f in "$SECRETS"/*.yaml; do
             [[ -f $f ]] || continue
@@ -133,7 +142,7 @@ let
             fi
             track "$f"
           done
-          do_apply; do_backup ;;
+          do_backup; do_apply ;;
         backup) do_backup ;;
         sync)
           shopt -s nullglob; q=("$QUEUE"/*.age)
