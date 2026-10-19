@@ -60,6 +60,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    t3code = {
+      url = "github:LizAinslie/t3code-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = { self, nixpkgs, catppuccin, home-manager, plasma-manager, sops-nix, vicinae, ... }@inputs:

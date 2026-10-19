@@ -610,6 +610,7 @@
         "nixpkgs": "nixpkgs_2",
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix",
+        "t3code": "t3code",
         "vicinae": "vicinae",
         "zen-browser": "zen-browser"
       }
@@ -683,6 +684,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "t3code": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792422718,
+        "narHash": "sha256-ktH3uHCJEnxQ+EQkB/Ah03/vS8jFIBceilwPBXpnItw=",
+        "owner": "LizAinslie",
+        "repo": "t3code-nix",
+        "rev": "004149c84b527b898a500c9f0505d664210ac7a4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LizAinslie",
+        "repo": "t3code-nix",
         "type": "github"
       }
     },

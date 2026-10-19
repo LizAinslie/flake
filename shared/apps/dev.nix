@@ -64,5 +64,6 @@
     cmake
 
     inputs.grok-bot.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.t3code.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 }
