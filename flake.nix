@@ -115,9 +115,20 @@
       nixosConfigurations = lib.mapAttrs mkNixos (hostsWith "configuration.nix");
       darwinConfigurations = lib.mapAttrs mkDarwin (hostsWith "darwin.nix");
 
-      checks = lib.recursiveUpdate
+      checks = lib.foldl lib.recursiveUpdate { } [
         (hostChecks self.nixosConfigurations (c: c.config.system.build.toplevel))
-        (hostChecks self.darwinConfigurations (c: c.system));
+        (hostChecks self.darwinConfigurations (c: c.system))
+        # Public repo: fail if any tracked secrets/*.yaml is not sops-encrypted.
+        {
+          x86_64-linux.secrets-encrypted = nixpkgs.legacyPackages.x86_64-linux.runCommand "secrets-encrypted" { } ''
+            for f in ${self}/secrets/*.yaml; do
+              [ -e "$f" ] || continue
+              grep -q "^sops:" "$f" || { echo "UNENCRYPTED: $f"; exit 1; }
+            done
+            touch $out
+          '';
+        }
+      ];
 
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
 

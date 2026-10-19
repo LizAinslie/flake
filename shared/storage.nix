@@ -1,7 +1,13 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ../crypt-keeper.nix ];
+  imports = [
+    ../crypt-keeper.nix
+    ./secret-keeper.nix
+  ];
+
+  # sops helper + backups. Set drive.uuid once the flash drive exists (lsblk -f).
+  services.secret-keeper.enable = true;
 
   # Removable LUKS vaults (ODD bay, USB). Root unlock is hosts/toshinya/disks.nix.
   services.crypt-keeper = {
