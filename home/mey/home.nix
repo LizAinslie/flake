@@ -57,7 +57,13 @@ in
       key = "Meta+Space";
       command = "vicinae toggle";
     };
+    hotkeys.commands."ksnip" = {
+      name = "ksnip region";
+      key = "Print";
+      command = "ksnip -r";
+    };
     shortcuts."services/plasma-manager-commands.desktop".vicinae = "Meta+Space";
+    shortcuts."services/plasma-manager-commands.desktop".ksnip = "Print";
   };
 
   wayland.windowManager.hyprland = lib.mkIf wantHypr {
