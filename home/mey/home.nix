@@ -61,7 +61,11 @@ in
       name = "ksnip region";
       key = "Print";
       # ksnip can't capture on Plasma 6 Wayland; Spectacle grabs headless, ksnip edits/uploads.
-      command = "sh -c 'f=$(mktemp --suffix=.png) && spectacle -bnr -o \"$f\" && [ -s \"$f\" ] && ksnip -e \"$f\"'";
+      command = "${pkgs.writeShellScript "ksnip-capture" ''
+        f=$(mktemp --suffix=.png)
+        spectacle -bnr -o "$f" && [ -s "$f" ] && exec ksnip -e "$f"
+        rm -f "$f"
+      ''}";
     };
     hotkeys.commands."spectacle-edit" = {
       name = "Spectacle region (draw-over)";
