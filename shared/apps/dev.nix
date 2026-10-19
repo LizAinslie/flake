@@ -60,6 +60,7 @@
     litellm
     gh
     forgejo-cli # `fj`, for git.kolektiv.computer
+    tiled
     docker
     figma-linux
     cmake
