@@ -59,6 +59,7 @@
     nodejs
     litellm
     gh
+    forgejo-cli # `fj`, for git.kolektiv.computer
     docker
     figma-linux
     cmake
