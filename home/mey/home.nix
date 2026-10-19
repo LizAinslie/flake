@@ -60,10 +60,20 @@ in
     hotkeys.commands."ksnip" = {
       name = "ksnip region";
       key = "Print";
-      command = "ksnip -r";
+      # ksnip can't capture on Plasma 6 Wayland; Spectacle grabs headless, ksnip edits/uploads.
+      command = "sh -c 'f=$(mktemp --suffix=.png) && spectacle -bnr -o \"$f\" && [ -s \"$f\" ] && ksnip -e \"$f\"'";
+    };
+    hotkeys.commands."spectacle-edit" = {
+      name = "Spectacle region (draw-over)";
+      key = "Shift+Print";
+      command = "spectacle -r";
     };
     shortcuts."services/plasma-manager-commands.desktop".vicinae = "Meta+Space";
     shortcuts."services/plasma-manager-commands.desktop".ksnip = "Print";
+    shortcuts."services/plasma-manager-commands.desktop".spectacle-edit = "Shift+Print";
+    # Free Print from Spectacle's own default binding.
+    shortcuts."org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "none";
+    shortcuts."org.kde.spectacle.desktop"."_launch" = "none";
   };
 
   wayland.windowManager.hyprland = lib.mkIf wantHypr {
