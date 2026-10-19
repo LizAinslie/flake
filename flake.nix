@@ -15,7 +15,16 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    # No `follows` on purpose: hyprland and vicinae publish cachix builds made
+    # against their own pinned nixpkgs. Following ours = cache misses = local
+    # source builds. The extra nixpkgs copies are the price of the cache.
     hyprland.url = "github:hyprwm/Hyprland";
+    vicinae.url = "github:vicinaehq/vicinae";
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     catppuccin = {
       url = "github:catppuccin/nix";
@@ -43,8 +52,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    vicinae.url = "github:vicinaehq/vicinae";
-
     grok-bot = {
       url = "github:jordangarrison/grok-bot-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -64,43 +71,62 @@
       url = "github:LizAinslie/t3code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
-  outputs = { self, nixpkgs, catppuccin, home-manager, plasma-manager, sops-nix, vicinae, ... }@inputs:
+  outputs = { self, nixpkgs, nix-darwin, ... }@inputs:
     let
-      mkHost = { hostPath, extraModules ? [ ] }:
-        nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+      inherit (nixpkgs) lib;
+
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
+      forAllSystems = lib.genAttrs systems;
+
+      # Host discovery: every hosts/<name>/ becomes a config. A folder with
+      # configuration.nix is a NixOS host, one with darwin.nix is a nix-darwin
+      # host. New host = new folder, no flake.nix edit.
+      hostDirs = lib.filterAttrs (_: type: type == "directory") (builtins.readDir ./hosts);
+      hostsWith = file: lib.filterAttrs (name: _: builtins.pathExists (./hosts + "/${name}/${file}")) hostDirs;
+
+      mkNixos = name: _:
+        lib.nixosSystem {
           specialArgs = { inherit inputs; };
           modules = [
-            hostPath
-            sops-nix.nixosModules.sops
-            catppuccin.nixosModules.catppuccin
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "hm-bak";
-              home-manager.extraSpecialArgs = { inherit inputs; };
-              home-manager.sharedModules = [
-                vicinae.homeManagerModules.default
-                plasma-manager.homeModules.plasma-manager
-              ];
-              home-manager.users.mey = import ./home/mey/home.nix;
-            }
-          ] ++ extraModules;
-        };
-    in
-    {
-      nixosConfigurations = {
-        meyower = mkHost {
-          hostPath = ./hosts/meyower/configuration.nix;
+            ./hosts/${name}/configuration.nix
+            inputs.sops-nix.nixosModules.sops
+            inputs.catppuccin.nixosModules.catppuccin
+            ./shared/home.nix
+          ];
         };
 
-        toshinya = mkHost {
-          hostPath = ./hosts/toshinya/configuration.nix;
+      mkDarwin = name: _:
+        nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit inputs; };
+          modules = [ ./hosts/${name}/darwin.nix ];
         };
-      };
+
+      # Every host's full system build is a check, grouped by its platform,
+      # so `nix flake check` catches one host breaking while you switch another.
+      hostChecks = configs: toplevel:
+        lib.foldlAttrs (acc: name: cfg:
+          lib.recursiveUpdate acc {
+            ${cfg.pkgs.stdenv.hostPlatform.system}.${name} = toplevel cfg;
+          }) { } configs;
+    in
+    {
+      nixosConfigurations = lib.mapAttrs mkNixos (hostsWith "configuration.nix");
+      darwinConfigurations = lib.mapAttrs mkDarwin (hostsWith "darwin.nix");
+
+      checks = lib.recursiveUpdate
+        (hostChecks self.nixosConfigurations (c: c.config.system.build.toplevel))
+        (hostChecks self.darwinConfigurations (c: c.system));
+
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt);
+
+      devShells = forAllSystems (system:
+        let pkgs = nixpkgs.legacyPackages.${system};
+        in {
+          default = pkgs.mkShell {
+            packages = with pkgs; [ nixd nixfmt sops ];
+          };
+        });
     };
 }

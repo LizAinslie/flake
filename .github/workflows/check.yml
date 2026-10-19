@@ -1,0 +1,35 @@
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Evaluates every host on every platform (meyower, toshinya, macbook) plus
+  # formatter and devShells. Catches option/module/input breakage, which is
+  # what actually bites. meyower's closure is ~137 GiB, so no full NixOS
+  # builds on a hosted runner.
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: accept-flake-config = true
+      - run: nix flake check -L --all-systems --no-build
+
+  # The darwin host is small enough to build for real on Apple Silicon.
+  darwin:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: accept-flake-config = true
+      - run: nix build -L --no-link .#checks.aarch64-darwin.macbook
