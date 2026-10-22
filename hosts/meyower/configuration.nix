@@ -2,6 +2,7 @@
 
 {
   imports = [
+    inputs.mt7927.nixosModules.default
     ../../shared/core.nix
     ../../shared/users.nix
     ../../shared/appearance.nix
@@ -73,4 +74,20 @@
   };
 
   system.stateVersion = "26.05";
+
+  # MediaTek MT7927 (Filogic 380) Wi-Fi 7 + BT 5.4 on Strix X870-F.
+  # Out-of-tree patches + firmware until mainline fully supports it.
+  hardware.mediatek-mt7927 = {
+    enable = true;
+    enableWifi = true;
+    enableBluetooth = true;
+    disableAspm = true;
+  };
+
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+
+  services.blueman.enable = true;
 }

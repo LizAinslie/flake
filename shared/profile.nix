@@ -73,6 +73,7 @@ in
         obsidian = flag "Obsidian";
         filelight = flag "Filelight";
         ksnip = flag "ksnip screenshot tool";
+        intiface = flag "Intiface Central";
       };
       games = {
         enable = mkEnableOption "games group" // { default = false; };

@@ -24,5 +24,6 @@ in
     ++ lib.optional tools.obsidian obsidian
     ++ lib.optional tools.filelight kdePackages.filelight
     ++ lib.optional tools.ksnip ksnip
+    ++ lib.optional tools.intiface intiface-central
   );
 }
