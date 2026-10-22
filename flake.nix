@@ -14,7 +14,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    mt7927.url = "github:cmspam/mt7927-nixos";
+    mt7927 = {
+      url = "github:cmspam/mt7927-nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # No `follows` on purpose: hyprland and vicinae publish cachix builds made
     # against their own pinned nixpkgs. Following ours = cache misses = local
