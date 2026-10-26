@@ -21,6 +21,16 @@
 
   networking.hostName = "meyower";
 
+  # t3code (3773) over LAN only: IPv4 LAN 192.168.68.0/22 + IPv6 link-local. iptables backend.
+  networking.firewall.extraCommands = ''
+    iptables -A nixos-fw -p tcp --dport 3773 -s 192.168.68.0/22 -j nixos-fw-accept
+    ip6tables -A nixos-fw -p tcp --dport 3773 -s fe80::/10 -j nixos-fw-accept
+  '';
+  networking.firewall.extraStopCommands = ''
+    iptables -D nixos-fw -p tcp --dport 3773 -s 192.168.68.0/22 -j nixos-fw-accept || true
+    ip6tables -D nixos-fw -p tcp --dport 3773 -s fe80::/10 -j nixos-fw-accept || true
+  '';
+
   mey.profile = {
     firmware = "efi";
     grubDevice = "nodev";
