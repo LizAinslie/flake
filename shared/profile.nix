@@ -71,6 +71,7 @@ in
         enable = flag "tools group";
         zed = flag "Zed";
         obsidian = flag "Obsidian";
+        gpu-screen-recorder = flag "gpu-screen-recorder 90s replay (F8 saves)";
         hibi = flag "hibi notes/document editor";
         filelight = flag "Filelight";
         ksnip = flag "ksnip screenshot tool";

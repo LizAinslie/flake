@@ -17,6 +17,7 @@ let
   wantI3Eww = builtins.elem "i3-eww" profile.sessions;
   wantVicinae = wantI3Eww || wantHypr || wantPlasma;
   mod = "Mod4";
+  gsrReplay = profile.apps.tools.enable && profile.apps.tools.gpu-screen-recorder;
 in
 {
   imports = [
@@ -72,6 +73,11 @@ in
       key = "Shift+Print";
       command = "spectacle -r";
     };
+    hotkeys.commands."gsr-save-replay" = lib.mkIf gsrReplay {
+      name = "Save last 90s (gpu-screen-recorder)";
+      key = "F8";
+      command = "gsr-save-replay";
+    };
     shortcuts."services/plasma-manager-commands.desktop".vicinae = "Meta+Space";
     shortcuts."services/plasma-manager-commands.desktop".ksnip = "Print";
     shortcuts."services/plasma-manager-commands.desktop".spectacle-edit = "Shift+Print";
@@ -88,6 +94,10 @@ in
     extraConfig = ''
       hl.bind("SUPER + SPACE", function()
         hl.exec_cmd("vicinae toggle")
+      end)
+    '' + lib.optionalString gsrReplay ''
+      hl.bind("F8", function()
+        hl.exec_cmd("gsr-save-replay")
       end)
     '';
   };

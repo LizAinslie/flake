@@ -14,6 +14,7 @@ in
     ./games.nix
     ./wireguard.nix
     ./ksnip.nix
+    ./gpu-screen-recorder.nix
   ];
 
   environment.systemPackages = with pkgs; [
