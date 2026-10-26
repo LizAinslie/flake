@@ -71,6 +71,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # No `follows`: hibi's package.nix wants electron_44, which our pinned
+    # nixos-unstable doesn't have yet. Use hibi's own nixpkgs pin until it does.
+    hibi.url = "github:schmayterling/hibi";
+
     t3code = {
       url = "github:LizAinslie/t3code-nix";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -71,6 +71,7 @@ in
         enable = flag "tools group";
         zed = flag "Zed";
         obsidian = flag "Obsidian";
+        hibi = flag "hibi notes/document editor";
         filelight = flag "Filelight";
         ksnip = flag "ksnip screenshot tool";
         intiface = flag "Intiface Central";
