@@ -4,6 +4,9 @@
 # gsr-save-replay, which sends SIGUSR1 to save the buffer to ~/Videos/Replays.
 let
   tools = config.mey.profile.apps.tools;
+  # Connector to record. DP-2 = 2560x1440 primary (kscreen priority 1); DP-1 is the portrait 1440x2560.
+  # Find names with `kscreen-doctor -o` or `gpu-screen-recorder --list-capture-options`.
+  captureMonitor = "DP-2";
   saveReplay = pkgs.writeShellScriptBin "gsr-save-replay" ''
     if ${pkgs.procps}/bin/pkill -SIGUSR1 -f '^gpu-screen-recorder'; then
       ${pkgs.libnotify}/bin/notify-send -a "GPU Screen Recorder" -i media-record "Replay saved" "Last 90s -> ~/Videos/Replays"
@@ -26,7 +29,7 @@ in
       path = [ "/run/wrappers" config.programs.gpu-screen-recorder.package ];
       serviceConfig = {
         ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Videos/Replays";
-        ExecStart = "${config.programs.gpu-screen-recorder.package}/bin/gpu-screen-recorder -w screen -f 60 -r 90 -c mp4 -a default_output -o %h/Videos/Replays";
+        ExecStart = "${config.programs.gpu-screen-recorder.package}/bin/gpu-screen-recorder -w ${captureMonitor} -f 60 -r 90 -c mp4 -a default_output -o %h/Videos/Replays";
         # SIGINT = stop without saving in replay mode.
         KillSignal = "SIGINT";
         Restart = "on-failure";
