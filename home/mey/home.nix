@@ -81,6 +81,9 @@ in
     shortcuts."services/plasma-manager-commands.desktop".vicinae = "Meta+Space";
     shortcuts."services/plasma-manager-commands.desktop".ksnip = "Print";
     shortcuts."services/plasma-manager-commands.desktop".spectacle-edit = "Shift+Print";
+    # hotkeys.commands alone only writes the action; kglobalaccel needs the
+    # [services] entry too, same as the other commands above.
+    shortcuts."services/plasma-manager-commands.desktop".gsr-save-replay = lib.mkIf gsrReplay "F8";
     # Free Print from Spectacle's own default binding.
     shortcuts."org.kde.spectacle.desktop"."RectangularRegionScreenShot" = "none";
     shortcuts."org.kde.spectacle.desktop"."_launch" = "none";

@@ -29,7 +29,9 @@ in
       path = [ "/run/wrappers" config.programs.gpu-screen-recorder.package ];
       serviceConfig = {
         ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p %h/Videos/Replays";
-        ExecStart = "${config.programs.gpu-screen-recorder.package}/bin/gpu-screen-recorder -w ${captureMonitor} -f 60 -r 90 -c mp4 -a default_output -o %h/Videos/Replays";
+        ExecStart = "${config.programs.gpu-screen-recorder.package}/bin/gpu-screen-recorder -w ${captureMonitor} -f 60 -r 90 -c mp4 -a default_output -fallback-cpu-encoding yes -o %h/Videos/Replays";
+        # Driver 595.99 exposes NVENC API 13.0 but nixpkgs FFmpeg needs 13.1, so NVENC
+        # is rejected; fall back to CPU encoding until the driver/FFmpeg line up.
         # SIGINT = stop without saving in replay mode.
         KillSignal = "SIGINT";
         Restart = "on-failure";
