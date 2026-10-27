@@ -2,7 +2,7 @@
 
 let
   tools = config.mey.profile.apps.tools;
-  hibiPkg = inputs.hibi.packages.${pkgs.stdenv.hostPlatform.system}.hibi;
+  hibi = import ../../pkgs/hibi.nix { inherit inputs; system = pkgs.stdenv.hostPlatform.system; };
 in
 {
   imports = [
@@ -24,7 +24,8 @@ in
   ] ++ lib.optionals tools.enable (
     lib.optional tools.zed zed-editor
     ++ lib.optional tools.obsidian obsidian
-    ++ lib.optional tools.hibi hibiPkg
+    ++ lib.optional tools.hibi hibi.beta
+    ++ lib.optional tools.hibi-nightly hibi.nightly
     ++ lib.optional tools.filelight kdePackages.filelight
     ++ lib.optional tools.ksnip ksnip
     ++ lib.optional tools.intiface intiface-central

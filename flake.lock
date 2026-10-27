@@ -129,21 +129,39 @@
         "type": "github"
       }
     },
-    "hibi": {
+    "hibi-beta": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792915143,
+        "narHash": "sha256-Pj4afBHb5uH9icgsO6Oi2oUICmWPIxkOmW/UQFN3DpA=",
+        "owner": "schmayterling",
+        "repo": "hibi",
+        "rev": "ac6b87988b12e54da8a051dcca9c54c6574d5e86",
+        "type": "github"
+      },
+      "original": {
+        "owner": "schmayterling",
+        "ref": "v0.2.1",
+        "repo": "hibi",
+        "type": "github"
+      }
+    },
+    "hibi-nightly": {
       "inputs": {
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1793017649,
-        "narHash": "sha256-xZubDfDIRoV1m1bxuyyiaKMOHmaracUBDsyZHIeSi6Q=",
+        "lastModified": 1793037778,
+        "narHash": "sha256-Nc8ynH5sUO6ibMRyr43okhrOLsA/oiY3/LVALa8dDD0=",
         "owner": "schmayterling",
         "repo": "hibi",
-        "rev": "520f2f8425b549191e660748b4d811ba0a5ef16f",
+        "rev": "3ac3eccdfe53394bbb2183fcda24f2340d779861",
         "type": "github"
       },
       "original": {
         "owner": "schmayterling",
         "repo": "hibi",
+        "rev": "3ac3eccdfe53394bbb2183fcda24f2340d779861",
         "type": "github"
       }
     },
@@ -546,11 +564,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792842277,
-        "narHash": "sha256-pGPnZGi8y9d76xNeracniXO3dsYVROEmMkMc8jD0Ihc=",
+        "lastModified": 1792782095,
+        "narHash": "sha256-KtL+p7f7jY34cO5Mt0/hUZNE3spnINk7hwpYxM2XLC4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d3b13ad75cc492690728f9307e443dec9ef9a20e",
+        "rev": "901c54c08bdc20e00c2b3c73716b97497b1b3c74",
         "type": "github"
       },
       "original": {
@@ -697,7 +715,8 @@
         "epic-games-launcher": "epic-games-launcher",
         "fluxer": "fluxer",
         "grok-bot": "grok-bot",
-        "hibi": "hibi",
+        "hibi-beta": "hibi-beta",
+        "hibi-nightly": "hibi-nightly",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "mt7927": "mt7927",

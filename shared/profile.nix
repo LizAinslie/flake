@@ -72,7 +72,8 @@ in
         zed = flag "Zed";
         obsidian = flag "Obsidian";
         gpu-screen-recorder = flag "gpu-screen-recorder 90s replay (F8 saves)";
-        hibi = flag "hibi notes/document editor";
+        hibi = flag "hibi notes/document editor (beta, 0.2.1)";
+        hibi-nightly = flag "hibi nightly (hibi-nightly)";
         filelight = flag "Filelight";
         ksnip = flag "ksnip screenshot tool";
         intiface = flag "Intiface Central";
