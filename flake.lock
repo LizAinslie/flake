@@ -151,17 +151,17 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1793037778,
-        "narHash": "sha256-Nc8ynH5sUO6ibMRyr43okhrOLsA/oiY3/LVALa8dDD0=",
+        "lastModified": 1793209377,
+        "narHash": "sha256-XxSBzWmq7LZhYyAY4VG0u/Lrxbwet4cZQbMq95weTyo=",
         "owner": "schmayterling",
         "repo": "hibi",
-        "rev": "3ac3eccdfe53394bbb2183fcda24f2340d779861",
+        "rev": "759dae1e197d3aa21823e0c63b446762417b26d8",
         "type": "github"
       },
       "original": {
         "owner": "schmayterling",
         "repo": "hibi",
-        "rev": "3ac3eccdfe53394bbb2183fcda24f2340d779861",
+        "rev": "759dae1e197d3aa21823e0c63b446762417b26d8",
         "type": "github"
       }
     },
