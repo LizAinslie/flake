@@ -76,8 +76,8 @@
     # Built by pkgs/hibi.nix. Bump: beta -> newest vX.Y.Z tag (refresh
     # npmDepsHash there); nightly -> commit of newest nightly-YYYY-MM-DD-* release.
     hibi-beta = { url = "github:schmayterling/hibi/v0.2.1"; flake = false; };
-    # nightly-2026-10-26-3ac3ecc-84-1
-    hibi-nightly.url = "github:schmayterling/hibi/3ac3eccdfe53394bbb2183fcda24f2340d779861";
+    # nightly-2026-10-28-759dae1-86-1
+    hibi-nightly.url = "github:schmayterling/hibi/759dae1e197d3aa21823e0c63b446762417b26d8";
 
     t3code = {
       url = "github:LizAinslie/t3code-nix";
