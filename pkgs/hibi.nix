@@ -74,7 +74,7 @@ in
   nightly = mk {
     variant = "nightly";
     src = inputs.hibi-nightly;
-    version = "0.2.2-nightly.20261026.g3ac3ecc";
+    version = "0.2.2-nightly.20261028.g759dae1";
     desktopName = "Hibi (Nightly)";
     bin = "hibi-nightly";
   };
