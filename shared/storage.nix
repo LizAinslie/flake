@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  # crypt-keeper itself comes from nix-suite (homeModules.default, via shared/home.nix).
   imports = [
-    ../crypt-keeper.nix
     ./secret-keeper.nix
   ];
 
@@ -10,7 +10,7 @@
   services.secret-keeper.enable = true;
 
   # Removable LUKS vaults (ODD bay, USB). Root unlock is hosts/toshinya/disks.nix.
-  services.crypt-keeper = {
+  nix-suite.crypt-keeper = {
     enable = true;
     drives = [
       {

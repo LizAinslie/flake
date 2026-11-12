@@ -1,5 +1,5 @@
 # secret-keeper: encrypt -> track -> apply -> back up sops secrets.
-# Home-manager module, sibling of crypt-keeper (imported from shared/storage.nix).
+# Home-manager module, sibling of nix-suite.crypt-keeper (imported from shared/storage.nix).
 #
 #   secret-keeper set <name> <key>   prompt for a value (hidden), write it into secrets/<name>.yaml
 #   secret-keeper edit <name>        open secrets/<name>.yaml decrypted in $EDITOR (sops)

@@ -79,6 +79,13 @@
     # nightly-2026-10-28-759dae1-86-1
     hibi-nightly.url = "github:schmayterling/hibi/759dae1e197d3aa21823e0c63b446762417b26d8";
 
+    # Shared tools (nrs/nfu/nadd, crypt-keeper, ...), each behind
+    # nix-suite.<tool>.enable. Also used by catitude-flake.
+    nix-suite = {
+      url = "github:LizAinslie/nix-suite";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     t3code = {
       url = "github:LizAinslie/t3code-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -105,6 +112,7 @@
             ./hosts/${name}/configuration.nix
             inputs.sops-nix.nixosModules.sops
             inputs.catppuccin.nixosModules.catppuccin
+            inputs.nix-suite.nixosModules.default
             ./shared/home.nix
           ];
         };

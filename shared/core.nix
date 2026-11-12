@@ -36,10 +36,9 @@ in
   };
 
   programs.fish.enable = true;
+  # nrs / nfu / nadd for /etc/nixos#<hostName>, from nix-suite.
+  nix-suite.rebuild-helpers.enable = true;
   programs.fish.shellAbbrs = {
-    nrs = "sudo nixos-rebuild switch --flake /etc/nixos#${config.networking.hostName}";
-    nfu = "nix flake update /etc/nixos";
-    nadd = "git -C /etc/nixos add .";
     ll = "ls -l";
     la = "ls -la";
   };

@@ -13,6 +13,7 @@
     sharedModules = [
       inputs.vicinae.homeManagerModules.default
       inputs.plasma-manager.homeModules.plasma-manager
+      inputs.nix-suite.homeModules.default
     ];
     users.mey = import ../home/mey/home.nix;
   };

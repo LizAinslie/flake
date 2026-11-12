@@ -562,6 +562,26 @@
         "type": "github"
       }
     },
+    "nix-suite": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794518469,
+        "narHash": "sha256-pu6cARw2GSQq1jjQ3hNzKpJEcxg5mCFm4bHVTonY0nM=",
+        "owner": "LizAinslie",
+        "repo": "nix-suite",
+        "rev": "a69452702d57dd1aaf5dcdb8107e60895cc54079",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LizAinslie",
+        "repo": "nix-suite",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1792782095,
@@ -721,6 +741,7 @@
         "hyprland": "hyprland",
         "mt7927": "mt7927",
         "nix-darwin": "nix-darwin",
+        "nix-suite": "nix-suite",
         "nixpkgs": "nixpkgs_3",
         "plasma-manager": "plasma-manager",
         "sops-nix": "sops-nix",
