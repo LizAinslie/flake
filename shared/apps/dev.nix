@@ -56,7 +56,7 @@
     yaak
     bruno
     pnpm
-    nodejs
+    nodejs_26
     litellm
     gh
     forgejo-cli # `fj`, for git.kolektiv.computer
