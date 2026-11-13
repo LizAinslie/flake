@@ -39,6 +39,7 @@ in
   # nrs / nfu / nadd + ll / la / udb from nix-suite.
   nix-suite.rebuild-helpers.enable = true;
   nix-suite.shell.enable = true;
+  nix-suite.npm.enable = true;
 
   programs.command-not-found.enable = true;
 
