@@ -569,11 +569,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794567356,
-        "narHash": "sha256-/4c2FKsen5x4VPFYjUIJ+PhlrAFGqc2HDZa6YDr3LQA=",
+        "lastModified": 1794568684,
+        "narHash": "sha256-OsBL1ddef3yq+geAwP9v8WbP2S4zmiSnFJULra9/gpc=",
         "owner": "LizAinslie",
         "repo": "nix-suite",
-        "rev": "6b3a3662554b650f93c3715eb70e1dc369ea7d41",
+        "rev": "e595cc653c06452c4c7c1424b7f715fe179af9df",
         "type": "github"
       },
       "original": {
