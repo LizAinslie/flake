@@ -43,6 +43,7 @@
         zed = true;
         obsidian = true;
         filelight = false;
+        rpi-imager = false;
       };
       games.enable = false;
       vpn.enable = true;

@@ -75,6 +75,7 @@ in
         hibi = flag "hibi notes/document editor (beta, 0.2.1)";
         hibi-nightly = flag "hibi nightly (hibi-nightly)";
         filelight = flag "Filelight";
+        rpi-imager = flag "Raspberry Pi Imager";
         ksnip = flag "ksnip screenshot tool";
         intiface = flag "Intiface Central";
       };

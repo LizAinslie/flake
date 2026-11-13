@@ -27,6 +27,7 @@ in
     ++ lib.optional tools.hibi hibi.beta
     ++ lib.optional tools.hibi-nightly hibi.nightly
     ++ lib.optional tools.filelight kdePackages.filelight
+    ++ lib.optional tools.rpi-imager rpi-imager
     ++ lib.optional tools.ksnip ksnip
     ++ lib.optional tools.intiface intiface-central
   );
