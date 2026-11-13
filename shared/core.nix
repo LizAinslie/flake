@@ -36,12 +36,9 @@ in
   };
 
   programs.fish.enable = true;
-  # nrs / nfu / nadd for /etc/nixos#<hostName>, from nix-suite.
+  # nrs / nfu / nadd + ll / la / udb from nix-suite.
   nix-suite.rebuild-helpers.enable = true;
-  programs.fish.shellAbbrs = {
-    ll = "ls -l";
-    la = "ls -la";
-  };
+  nix-suite.shell.enable = true;
 
   programs.command-not-found.enable = true;
 
